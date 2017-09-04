@@ -1,0 +1,318 @@
+*
+{
+    padding: 0;
+    margin: 0;
+}
+html
+{
+    width: 100%;
+    height: 100%;
+    background-color: black;
+}
+body
+{
+    width: 980px;
+    height: 1396px;
+    background-color: white;
+    margin: auto;
+}
+header
+{
+    border-bottom: 2px solid #938e8c;
+    width: 892px;
+    box-sizing: border-box;
+    height: 63px;
+    margin: auto;
+}
+header div
+{
+    box-sizing: border-box;
+    background-color: #D55D5C;
+    width: 110px;
+    height: 61px;
+    color: white;
+    font-size: 12px;
+    padding-left: 8px;
+    float: left;
+    line-height: 8em;
+}
+header span
+{
+    float: right;
+    line-height: 8em;
+    color: #d45d5c;
+    font-size: 12px;
+    font-weight: bold;
+}
+article
+{
+    box-sizing: border-box;
+    width: 892px;
+    height: 301px;
+    margin: 30px auto;
+    position: relative;
+}
+body article:first-of-type section
+{
+    display: inline-block;
+}
+body article:first-of-type section:first-of-type
+{
+    position: relative;
+    width: 641px;
+    height: 301px;
+}
+body article:first-of-type section:first-of-type div:first-of-type
+{
+    left: 0;
+    background-color: #75b86b;
+    opacity: 0.4;
+    width: 191px;
+    height: 301px;
+    position: absolute;
+    z-index: 2;
+}
+body article:first-of-type section:first-of-type div:last-of-type
+{
+    right: 0;
+    background-color: #cc8091;
+    opacity: 0.4;
+    width: 191px;
+    height: 301px;
+    position: absolute;
+    z-index: 2;
+}
+body article:first-of-type section:first-of-type img
+{
+    width: 641px;
+    height: 100%;
+    position: absolute;
+    z-index: 1
+}
+body article:first-of-type section:last-of-type
+{
+    width: 203px;
+    box-sizing: border-box;
+    border-top: 2px solid #cc8091;
+    margin-left: 30px;
+    vertical-align: top;
+    position: absolute;
+    right: 0;
+}
+body article:first-of-type section:last-of-type p
+{
+    margin: 10px 0;
+}
+article:first-of-type p span:first-of-type
+{
+    color: black;
+    font-size: 24px;
+    font-family: "Microsoft Yahei";
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+article:first-of-type p span:nth-of-type(2)
+{
+    color: #676767;
+    font-size: 12px;
+    font-family: "楷体";
+    text-decoration: none;
+    text-transform: capitalize;
+}
+article:first-of-type span:nth-of-type(1)
+{
+    color: #75b86b;
+    font-size: 95px;
+    font-family: "Microsoft Yahei";
+    font-style: italic;
+}
+article:first-of-type span:nth-of-type(2)
+{
+    color: #cc8091;
+    font-size: 45px;
+    font-family: "Microsoft Yahei";
+}
+article:first-of-type span:nth-of-type(3)
+{
+    color: #cc8091;
+    font-size: 19px;
+    font-family: "Microsoft Yahei";
+}
+article:nth-of-type(2)
+{
+    height: 190px;
+}
+article:nth-of-type(2) div
+{
+    float: left;
+    margin-right: 30px;  
+}
+article:nth-of-type(2) div:nth-of-type(1)
+{
+    width: 30%;
+}
+article:nth-of-type(2) div:nth-of-type(2)
+{
+    width: 30%;
+}
+article:nth-of-type(2) div:nth-of-type(3)
+{
+    width: 20%;
+}
+article:nth-of-type(2) p
+{
+    font-size: 12px;
+    margin: 8px 0;
+}
+article:nth-of-type(2) div:nth-of-type(1) p:first-of-type
+{
+    color: #75b86b;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+article:nth-of-type(2) div:nth-of-type(2) p:first-of-type
+{
+    color: #d2994f;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+article:nth-of-type(2) div:nth-of-type(3) p:first-of-type
+{
+    color: #cc7680;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+article:nth-of-type(2) div:nth-of-type(3) p:nth-of-type(2)
+{
+    line-height: 2em;
+}
+article:nth-of-type(2) div:nth-of-type(3) p:nth-of-type(n+2) span
+{
+    font-size: 12px;
+    color: #cd4a48;
+    font-style: italic;
+    opacity: 0.7;
+}
+article:nth-of-type(3)>div
+{
+    float: left;
+}
+article:nth-of-type(3)>div:first-child
+{
+    width: 42%;
+}
+article:nth-of-type(3)>div:last-child
+{
+    width: 42%;
+}
+article:nth-of-type(3) div:first-of-type div span
+{
+    font-size: 72px;
+    color: #f5e327;
+    font-family: "黑体";
+    font-weight: bold;
+    font-style: italic;
+}
+article:nth-of-type(3) div:first-of-type div
+{
+    border-bottom: 2px solid #11456b;
+}
+article:nth-of-type(3) div:first-of-type div p:first-of-type
+{
+    font-size: 42px;
+    color: #11456b;
+    font-family: "黑体";
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+}
+article:nth-of-type(3) div:first-of-type div p:nth-of-type(2)
+{
+    font-size: 33px;
+    color: #11456b;
+    font-family: "黑体";
+    font-weight: bold;
+    text-transform: uppercase;
+}
+article:nth-of-type(3) div:first-of-type>p span
+{
+    font-size: 70px;
+    color: #f5e327;
+    font-family: "微软雅黑";
+    font-weight: bold;
+    float: left;
+    margin-right: 10px;
+}
+article:nth-of-type(3) p
+{
+    margin: 16px 0;
+}
+article:nth-of-type(3) div:first-of-type>p img
+{
+    float: right;
+    margin-top: 15px;
+    margin-left: 12px;
+    margin-bottom: 5px;
+}
+#sider
+{
+    margin: 30px;
+    height: 700px;
+}
+#imgfather
+{
+    position: relative;
+    height: 257px;
+    width: 458px;
+    border-bottom: none;
+}
+#imgctn
+{
+    position: absolute;
+    border-bottom: none;
+}
+#mask
+{
+    position: absolute;
+    bottom: 0;
+    height: 61px;
+    background-color: black;
+    opacity: 0.6;
+    width: 458px;
+    border-bottom: none;
+}
+#maskcontent
+{
+    height: 44px;
+    border-bottom: none;
+    width: 380px;
+    margin: auto 40px;
+    opacity: 1;
+    position: absolute;
+    bottom: 10px;    
+    border-left: 3px solid #72b16a;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+}
+#maskcontent p:first-child
+{
+    font-size: 26px;
+    color: white;
+    display: inline-block;
+    margin: 0;
+}
+#maskcontent p:last-child
+{
+    font-size: 12px;
+    color: #72b16a;
+    font-style: italic;
+    display: inline-block;
+    margin: 0;
+}

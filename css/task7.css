@@ -1,0 +1,772 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+html
+{
+    width: 100%;
+    height: 100%;
+    background-color: #0E0E0E;
+}
+body
+{
+    width: 1280px;
+    height: 100%;
+    box-sizing: border-box;
+    margin: auto;
+    background-color: white;
+}
+header
+{
+    height: 60px;
+    text-align: center;
+}
+header h3
+{
+    float: left;
+    margin-top: 15px;
+    margin-left: 30px;
+    font-family: "宋体";
+    font-size: 22px;
+}
+header h3 a
+{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: url("../images/mission7_sprit.png") no-repeat 0 -46px;
+    margin: 0 10px -7px 20px;
+}
+header ul
+{
+    float: right;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+header li
+{
+    float: left;
+    width: 65px;
+    height: 100%;
+    margin-right: 20px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 60px;
+    box-sizing: border-box;
+}
+header li:hover
+{
+    border-bottom: 4px solid #E84F51;
+}
+header ul a
+{
+    text-decoration: none;  
+    font-family: "微软雅黑";
+    color: grey;
+    font-size: 15px;
+}
+header ul a:hover
+{
+    color: #E84F51;
+}
+header ul li:nth-of-type(6) a
+{
+    color: #E84F51;
+    font-weight: bold;
+}
+header ul li:nth-of-type(6) i
+{
+    display: inline-block;
+    width: 14px;
+    height: 17px;
+    background: url("../images/mission7_sprit.png") no-repeat -40px -60px;
+    margin: 0 5px -3px 0;
+}
+header ul li:nth-of-type(6):hover
+{
+    border: none;
+}
+#adDiv
+{
+    background-image: url("../images/mission7_navhead.png");
+    height: 690px;
+    position: relative;
+}
+#adBtn
+{
+    position: absolute;
+    left: 125px;
+    top: 430px;
+    width: 330px;
+    height: 63px;
+    background-color: #E8504F;
+    cursor: pointer;
+    font-size: 30px;
+    font-weight: normal;
+    text-align: center;
+    line-height: 63px;
+    letter-spacing: 6px;
+}
+#adBtn a
+{
+    text-decoration: none;
+    color: white;
+}
+#shortCutDiv
+{   
+    width: 100%;
+    height: 248px;
+}
+#shortCutDiv ul
+{
+    list-style-type: none;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 110px 30px 30px 30px;
+    background-color: white;
+}
+#shortCutDiv li
+{
+    width: 170px;
+    height: 50px;
+    display: inline-block;
+    padding: 0 70px;
+    box-sizing: content-box;
+    border-right: 2px solid grey;
+    font-size: 14px;
+    color: grey;
+    text-align: center;
+    position: relative;
+}
+#shortCutDiv li:last-of-type
+{
+    border: none;
+}
+#shortCutDiv li:nth-of-type(1) i
+{
+    display: block;
+    width: 42px;
+    height: 42px;
+    background: url("../images/mission7_sprit.png") no-repeat 0 0px;
+    position: absolute;
+    top: -70px;
+    left: 130px;
+}
+#shortCutDiv li:nth-of-type(2) i
+{
+    display: block;
+    width: 42px;
+    height: 42px;
+    background: url("../images/mission7_sprit.png") no-repeat -42px 0px;
+    position: absolute;
+    top: -70px;
+    left: 130px;
+}
+#shortCutDiv li:nth-of-type(3) i
+{
+    display: block;
+    width: 42px;
+    height: 42px;
+    background: url("../images/mission7_sprit.png") no-repeat -84px 0px;
+    position: absolute;
+    top: -70px;
+    left: 130px;
+}
+#shortCutDiv li:nth-of-type(4) i
+{
+    display: block;
+    width: 42px;
+    height: 42px;
+    background: url("../images/mission7_sprit.png") no-repeat -126px 0px;
+    position: absolute;
+    top: -70px;
+    left: 130px;
+}
+#ad2Div
+{
+    width: 100%;
+    height: 360px;
+    background-color: #ededed;
+    padding: 80px 0;
+    box-sizing: border-box;
+}
+#ad2Div p:first-child
+{
+    width: 91px;
+    height: 91px;
+    margin: 0 calc((100% - 91px)/2) 50px calc((100% - 91px)/2);
+    background: url("../images/mission7_sprit.png") no-repeat 0 -84px;
+}
+#ad2Div p:last-child
+{
+    text-align: center;
+    font-size: 48px;
+    font-weight: normal;
+    color: grey;
+    letter-spacing: 5px;
+}
+#cityInfoDiv
+{
+    width: 100%;
+    height: 340px;
+    background-image: url("../images/mission7_city.jpg");
+    position: relative;
+}
+.flexContainer
+{
+    width: 100%;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 170px;
+}
+.flexContainer>div, .flexContainer>input
+{
+    width: 236px;
+    height: 36px;
+    margin-right: 30px;
+    border: 1px solid #BF4E48;
+}
+.flexContainer select
+{
+    color: grey;
+    width: 238px;
+    height: 38px;
+    margin: -1px;
+    position: absolute;
+    clip: rect(1px 237px 37px 1px);
+}
+.flexContainer option
+{
+    color: #808080;
+}
+#province option:first-of-type
+{
+    display: none;
+}
+.flexContainer>input
+{
+    background-color: #BF4E48;
+    color: white;
+    border: none;
+}
+#galleryDiv
+{
+    width: 100%;
+    height: 605px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    padding-top: 90px;
+}
+.galleryItem
+{
+    width: 220px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right: 35px;
+}
+.galleryImg
+{
+    width: 100%;
+    height: 336px;
+    border-top: 1px solid lightgrey;
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+}
+#galleryDiv i
+{
+    display: block;
+    width: 200px;
+    height: 310px;
+}
+.firstImg
+{
+    background: url("../images/mission7_avtivity.png") no-repeat 0 0;
+}
+.secondImg
+{
+    background: url("../images/mission7_avtivity.png") no-repeat 0 -350px;
+}
+.thirdImg
+{
+    background: url("../images/mission7_avtivity.png") no-repeat 0 -650px;
+}
+.fourthImg
+{
+    background: url("../images/mission7_avtivity.png") no-repeat 0 -970px;
+}
+#galleryDiv p
+{
+    text-align: center;
+}
+.gallerySubTitle
+{
+    font-size: 14px;
+    color: grey;
+}
+#learnMoreDiv
+{
+    width: 100%;
+    background-color: white;
+}
+#newWorld
+{
+    width: 100%;
+    height: 565px;
+    display: flex;
+    align-items: center;
+}
+#newEra
+{
+    width: 100%;
+    height: 520px;
+    display: flex;
+}
+#newWorldImg
+{
+    display: inline-block;
+    width: 66%;
+    height: 100%;
+}
+#newWorldImg img
+{
+    width: 100%;
+    height: 100%;
+}
+#newWorldTxt
+{
+    display: inline-block;
+    width: 33%;
+    text-align: center;
+}
+#newWorldTxt h3
+{
+    font-family: "华文宋体";
+    font-size: 24px;
+}
+#newWorldTxt span
+{
+    color: #DC4652;
+    font-weight: bold;
+    font-family: "黑体";
+}
+#newWorldTxt p
+{
+    width: 290px;
+    font-size: 12px;
+    color: grey;
+    text-align: left;
+    line-height: 3em;
+    margin: 30px auto;
+}
+#newWorldTxt a
+{
+    text-decoration: none;
+    display: block;
+    width: 105px;
+    height: 30px;
+    border: 1px solid #DC4652;
+    color: #DC4652;
+    margin: auto;
+    line-height: 30px;
+    font-size: 14px;
+}
+#newWorldTxt a:hover
+{
+    background-color: #DC4652;
+    color: white;
+}
+#newWorldTxt ul
+{
+    margin-top: 30px;
+}
+#newWorldTxt li
+{
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    border: 1px solid #999;
+    background-color: #fff;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0 8px;
+}
+#newWorldTxt li:hover
+{
+    background-color: #999;
+}
+#newEra section
+{
+    width: 33%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    line-height: 1.8em;
+}
+#newEra section:first-of-type
+{
+    background-color: #E8504F;
+}
+#newEra section:nth-of-type(2)
+{
+    background-color: white;
+}
+#newEra section:nth-of-type(3)
+{
+    background: url("../images/mission7_newTime.jpg") no-repeat 0 0;
+}
+#newEra section:first-of-type p
+{
+    color: white;
+}
+#newEra section:first-of-type a
+{
+    display: block;
+    width: 170px;
+    height: 43px;
+    border: 1px solid white;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    letter-spacing: 2px;
+    line-height: 43px;
+}
+#newEra section:first-of-type a:hover
+{
+    background-color: white;
+    color: #E8504F;
+}
+#newEra section:first-of-type i
+{
+    display: block;
+    width: 30px;
+    height: 2px;
+    background-color: white;
+    margin: 20px auto;
+}
+#newEra section:nth-of-type(2) p
+{
+    color: #333333;
+}
+#newEra section:nth-of-type(2) a
+{
+    display: block;
+    width: 170px;
+    height: 43px;
+    border: 1px solid #E8504F;
+    text-decoration: none;
+    color: #E8504F;
+    text-align: center;
+    letter-spacing: 2px;
+    line-height: 43px;
+}
+#newEra section:nth-of-type(2) a:hover
+{
+    color: white;
+    background-color: #E8504F;
+}
+#newEra section:nth-of-type(2) i
+{
+    display: block;
+    width: 30px;
+    height: 2px;
+    background-color: #333333;
+    margin: 20px auto;
+}
+#newEra section:nth-of-type(3)
+{
+    width: 34%;
+}
+.shadow
+{
+    width: 100%;
+    height: 100%;
+}
+.shadow:hover
+{
+    background-color: black;
+    opacity: 0.4;
+}
+
+
+#volunteerDiv
+{
+    height: 750px;
+    width: 100%;
+    background-color: white;
+}
+#vol1
+{
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#vol1 i
+
+{
+    display: block;
+    width: 30px;
+    height: 2px;
+    background-color: #E8504F;
+}
+#vol1 p:first-of-type
+{
+    font-size: 18px;
+    color: black;
+    line-height: 3em;
+    font-family: "黑体";
+    font-weight: bold;
+}
+#vol1 p:last-of-type
+{
+    font-size: 12px;
+    color: grey;
+    width: 420px;
+    line-height: 2em;
+    margin-top: 5px;
+}
+#vol2
+{
+    width: 100%;
+    height: 400px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#sub1
+{
+    width: 290px;
+    height: 280px;
+}
+#sub2
+{
+    width: 640px;
+    height: 280px;
+    margin-left: 70px;
+}
+.titlep
+{
+    font-size: 14px;
+    font-weight: bold;
+    color: grey;
+    margin: 15px 0;
+}
+.contentp
+{
+    font-size: 12px;
+    color: #B7B5B6  ;
+    margin: 10px 0;
+}
+.morep
+{
+    margin-bottom:  20px;
+    width: 100%;
+    margin-top: -5px;
+    text-align: right;
+}
+.more
+{
+    display: block;
+    text-decoration: none;
+    font-size: 12px;
+    color: grey;
+}
+#sub1 a::before
+{
+    content: "∨ ";
+}
+form
+{
+    width: 100%;
+    height: 100%;
+}
+.formRow
+{
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+    width: 100%;
+}
+.formRow div
+{
+    width: 310px;
+    height: 40px;
+    background-color: #EDEDEF;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+#sub2 input
+{
+    border: none;
+    background-color: #EDEDEF;
+    outline: none;
+}
+form label
+{
+    font-size: 12px;
+    margin-right: 30px;
+}
+#txtarea
+{
+    width: 100%;
+    height: 120px;
+    background-color: #EDEDEF;
+    border: none;
+    outline: none;
+    padding: 10px;
+    box-sizing: border-box;
+    color: grey;
+    resize: none;
+}
+input[type="submit"]
+{
+    width: 100%;
+    height: 40px;
+}
+#contactUsDiv
+{
+    width: 100%;
+    height: 360px;
+    background-color: #33363F;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+#contactUsDiv p:first-of-type
+{
+    color: white;
+    text-align: center;
+    font-size: 22px;
+    margin: 5px 0;
+}
+#contactUsDiv p:nth-of-type(2)
+{   
+    color: white;
+    text-align: center;
+    font-size: 13px;
+    margin: 5px 0;
+    width: 465px;
+}
+.contactInputDiv
+{
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+.contactInputDiv input[type="text"]
+{
+    width: 430px;
+    height: 40px;
+    background-color: white;
+    border: none;
+    outline: none;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+.contactInputDiv input[type="button"]
+{
+    width: 80px;
+    height: 40px;
+    background-color: grey;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.iconDiv
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+}
+.iconDiv a
+{
+    margin: 0 13px;
+}
+.iconDiv a:first-of-type
+{
+    width: 29px;
+    height: 25px;
+    background: url("../images/mission7_sprit.png") no-repeat -139px -97px;
+}
+.iconDiv a:nth-of-type(2)
+{
+    width: 29px;
+    height: 25px;
+    background: url("../images/mission7_sprit.png") no-repeat -135px -72px;
+}
+.iconDiv a:nth-of-type(3)
+{
+    width: 29px;
+    height: 25px;
+    background: url("../images/mission7_sprit.png") no-repeat -134px -47px;
+}
+.iconDiv a:nth-of-type(4)
+{
+    width: 29px;
+    height: 25px;
+    background: url("../images/mission7_sprit.png") no-repeat -139px -122px;
+}
+
+
+
+
+
+
+
+
+footer
+{
+    width: 100%;
+    height: 60px;
+    background-color: #30303A;
+    color: white;
+    font-size: 10px;
+}
+.footLeft
+{
+    float: left;
+    width: 260px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+}
+.footRight
+{
+    float: right;
+    width: 155px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+}
+.footRight a
+{
+    color: white;
+    text-decoration: none;
+    font-size: 10px;
+}
