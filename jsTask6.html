@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 06</title>
+
+
+    <style>
+      html
+      {
+        width: 100%;
+        height: 100%;
+        background-color: #1e1e1e;
+      }
+      body
+      {
+        width: 1080px;
+        height: 100%;
+        background-color: lightgrey;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 0;
+      }
+      #btnContainer
+      {
+        display: flex;
+        width: 100%;
+        height: 100px;
+        justify-content: center;
+        align-items: center;
+      }
+      a
+      {
+        text-decoration: none;
+        width: 60px;
+        height: 30px;
+        line-height: 30px;
+        margin: 0 10px;
+        background-color: #E84F51;
+        color: white;
+        text-align: center;
+      }
+      textarea
+      {
+        width: 400px;
+        height: 80px;
+      }
+      #display
+      {
+        width: 1000px;
+        height: 100px;
+        background-color: white;
+        margin: 30px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      input
+      {
+        height: 30px;
+      }
+    </style>
+  </head>
+<body>  
+  <div id="btnContainer">
+    <textarea name="" id="numinput"></textarea>
+    <a href="JavaScript:void(0)" onclick="insertLeft()">左侧入</a>
+    <a href="JavaScript:void(0)" onclick="insertRight()">右侧入</a>
+    <a href="JavaScript:void(0)" onclick="popLeft()">左侧出</a>
+    <a href="JavaScript:void(0)" onclick="popRight()">右侧出</a>
+    <input type="text" id="searchInput">
+    <a href="JavaScript:void(0)" onclick="searchEle()">查询</a>
+  </div>
+  <div id="display">
+
+  </div>
+
+
+  
+<script>
+
+  function validate(num)
+  {
+    if(num.length == 0)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }
+
+  function createNew(content)
+  {
+    var contentArray = content.split(/[,.，。、\n\r\s\t]/);
+    var contentlen = contentArray.length;
+    var items = [];
+    for(var i=0; i<contentlen; i++)
+    {
+      var newNum = document.createElement("i");
+      newNum.style.textDecoration = "none";
+      newNum.style.minWidth = "30px";
+      newNum.style.height = "30px";
+      newNum.style.color = "white";
+      newNum.style.backgroundColor = "#E84F51";
+      newNum.style.textAlign = "center";
+      newNum.style.cursor = "pointer";
+      newNum.style.lineHeight = "30px";
+      newNum.style.margin = "0 10px";
+      newNum.style.padding = "0 10px";
+      newNum.style.fontStyle = "normal";
+      newNum.addEventListener("click", onTagClick);
+      newNum.innerHTML = contentArray[i];
+      items.push(newNum);
+    }    
+    return items;
+  }
+
+  function insertLeft()
+  {
+    var input = document.getElementById("numinput");
+    var container = document.getElementById("display");
+    var content = input.value;
+    if(validate(content) == false)
+    {
+      return;
+    }
+    else
+    {
+      var newNum = createNew(content);
+      for(var j=0; j<newNum.length; j++)
+      {
+        var len = container.children.length;
+        if(len == 0)
+        {
+          container.appendChild(newNum[j]);
+        }
+        else
+        {
+          container.insertBefore(newNum[j], container.children[0]);        
+        }
+      }      
+      input.value = "";
+    }
+  }
+
+  function insertRight()
+  {
+    var input = document.getElementById("numinput");
+    var container = document.getElementById("display");
+    var content = input.value;
+    if(validate(content) == false)
+    {
+      return;
+    } 
+    else
+    {
+      var newNum = createNew(content);
+      for(var j=0; j<newNum.length; j++)
+      {        
+        container.appendChild(newNum[j]);       
+      }
+      input.value = ""; 
+    }
+  }
+
+  function popLeft()
+  {
+    var container = document.getElementById("display");
+    if(container.children.length != 0)
+    {
+      var item = container.children[0];
+      alert(item.innerHTML);
+      container.removeChild(item);
+    }
+  }
+
+  function popRight()
+  {
+    var container = document.getElementById("display");
+    if(container.children.length != 0)
+    {
+      var item = container.children[container.children.length-1];
+      alert(item.innerHTML);
+      container.removeChild(item);
+    }
+  }
+
+
+  function onTagClick()
+  {
+    var item = event.target;
+    var container = document.getElementById("display");
+    container.removeChild(item);
+  }
+
+
+  function searchEle()
+  {
+    var searchContent = document.getElementById("searchInput").value;
+    var container = document.getElementById("display");
+    var reg = new RegExp(eval('/' + searchContent + '/'));
+    for(var k=0; k<container.children.length; k++)
+    {
+      var str = container.children[k].innerHTML;
+
+      container.children[k].style.backgroundColor = "#E84F51";
+      container.children[k].style.color = "white";
+      if(reg.test(str) == true)
+      {
+        container.children[k].style.backgroundColor = "yellow";
+        container.children[k].style.color = "black";
+      }
+    }
+  }
+</script>
+</body>
+</html>

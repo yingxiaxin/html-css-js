@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task YaoYao02</title>
+
+
+    <style>
+      html
+      {
+        width: 100%;
+        height: 100%;
+        background-color: #1e1e1e;
+      }
+      body
+      {
+        width: 1280px;
+        height: 100%;
+        background-color: lightgrey;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 0;
+      }
+      table
+      {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); 
+      }      
+      td
+      {
+        text-align: right;
+        height: 60px;
+      }      
+      input
+      {
+        height: 30px;
+        width: 400px;
+        margin: 0 20px;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid grey;
+      }
+      input:focus
+      {
+        box-shadow: 0 0 5px 2px #62ACEB;
+        border: none;
+      }
+      .alert
+      {
+        box-shadow: 0 0 5px 1px #D90015;     
+        border: none;
+      }
+      .success
+      {
+        box-shadow: 0 0 5px 1px #61B545;
+        border: none;  
+      }
+      a
+      {
+        display: inline-block;
+        text-decoration: none;
+        width: 80px;
+        height: 40px;
+        color: white;
+        background-color: cornflowerblue;
+        border-radius: 5px;
+        cursor: pointer;
+        line-height: 40px;
+        font-size: 20px;
+        text-align: center;
+        margin: 0 10px;
+      }      
+      p
+      {
+        width: 100%;
+        height: 12px;
+        margin: 5px 25px;
+        text-align: left;
+        font-size: 12px;
+        line-height: 12px;
+        color: grey;
+      }
+      .promptFail
+      {
+        color: #D90015;
+      }
+      .promptSuccess
+      {
+        color: #61B545;
+      }
+      
+    </style>
+  </head>
+  <body>
+  
+    <table>
+      <tr>
+        <td>名称
+          <p></p>
+        </td>
+        <td>
+          <input type="text" id="nm" onfocus="shownm(event)" onblur="validatenm(event)">
+          <p></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>密码
+          <p></p>
+        </td>
+        <td>
+          <input type="text" id="pwd" onfocus="showpwd(event)" onblur="validatepwd(event)">
+          <p></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>确认密码
+          <p></p>
+        </td>
+        <td>
+          <input type="text" id="confirmpwd" onfocus="showconfirmpwd(event)" onblur="validateconfirmpwd(event)">
+          <p></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>邮箱
+          <p></p>
+        </td>
+        <td>
+          <input type="text" id="eml" onfocus="showeml(event)" onblur="validateeml(event)">
+          <p></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>手机
+          <p></p>
+        </td>
+        <td>
+          <input type="text" id="phone" onfocus="showphone(event)" onblur="validatephone(event)">
+          <p></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2"><a href="JavaScript:void(0)" onclick="validateAll()">提交</a></td>
+      </tr>
+    </table>
+  
+    <script>
+
+      function shownm(event)
+      {
+        var pnode = event.target.parentElement.children[1];
+        pnode.innerText = "必填，长度为4-16个字符";
+
+        event.target.className = "";
+        event.target.parentElement.children[1].className = "";
+      }
+
+      function validatenm(event)
+      {
+        var pnode = event.target.parentElement.children[1];
+        pnode.innerText = "";
+
+        var ipt = event.target;
+        if(ipt.value.length == 0)
+        {
+          fail(ipt);
+          pnode.innerText = "名称不能为空";
+        }
+        else
+        {
+          var regchinese = new RegExp(/[\u4e00-\u9fa5]/g);
+          //一个中文字符用两个英文字符替换，然后再计算是不是超过长度
+          var newstr = ipt.value.replace(regchinese, "aa");
+          if(newstr.length < 4 || newstr.length > 16)
+          {
+            fail(ipt);
+            pnode.innerText = "名称长度需在4-16个字符之间，中文占两个字符";
+          }
+          else
+          {
+            success(ipt);
+            pnode.innerText = "名称格式正确";
+          }
+        }
+      }
+
+      function showpwd(event)
+      {
+        var pnode = event.target.parentElement.children[1];
+        pnode.innerText = "必填，密码为8位字母和数字组合";
+
+        event.target.className = "";
+        event.target.parentElement.children[1].className = "";
+      }
+
+      function validatepwd(event)
+      {
+        var pnode = event.target.parentElement.children[1];
+        pnode.innerText = "";
+
+        var ipt = event.target;
+        var iptstr = ipt.value;
+        if(iptstr.length == 0)
+        {
+          fail(ipt);
+          pnode.innerText = "密码不能为空";
+        }
+        else
+        {
+          var pwdreg = new RegExp(/^[a-zA-Z0-9]{4,8}$/);
+          if(iptstr.length < 4 || iptstr.length > 8)
+          {
+            fail(ipt);
+            pnode.innerText = "密码为4-8位字母和数字的组合";
+          }
+          else if(iptstr.match(pwdreg) == null)
+          {
+            fail(ipt);
+            pnode.innerText = "密码为4-8位字母和数字的组合";
+          }
+          else
+          {
+            success(ipt);
+            pnode.innerText = "密码格式正确";
+          }
+        }
+      }
+
+      function showconfirmpwd(event)
+      {
+        var pnode = event.target.parentElement.children[1];
+        pnode.innerText = "请再次输入密码";
+
+        event.target.className = "";
+        event.target.parentElement.children[1].className = "";
+      }
+
+      function validateconfirmpwd(event)
+      {
+        var pnode = event.target.parentElement.children[1];
+        pnode.innerText = "";
+
+        var ipt = event.target;
+        var iptstr = ipt.value;
+        var pwdipt = document.getElementById("pwd");
+        if(iptstr.length == 0)
+        {
+          fail(ipt);
+          pnode.innerText = "密码确认失败，请输入密码";
+        }
+        else if(iptstr === pwdipt.value)
+        {
+          success(ipt);
+          pnode.innerText = "密码确认通过";
+        }
+        else
+        {
+          fail(ipt);
+          pnode.innerText = "密码确认失败，请输入和上面相同的密码";
+        }
+      }
+
+      function showeml(event)
+      {
+        var pnode = event.target.parentElement.children[1];
+        pnode.innerText = "必填，请输入邮箱地址";
+
+        event.target.className = "";
+        event.target.parentElement.children[1].className = "";
+      }
+
+      function validateeml(event)
+      {
+        var pnode = event.target.parentElement.children[1];
+        pnode.innerText = "";
+      }
+
+      function showphone(event)
+      {
+        var pnode = event.target.parentElement.children[1];
+        pnode.innerText = "必填，请输入手机号码";
+
+        event.target.className = "";
+        event.target.parentElement.children[1].className = "";
+      }
+
+      function validatephone(event)
+      {
+        var pnode = event.target.parentElement.children[1];
+        pnode.innerText = "";
+      }
+      
+
+      function fail(ele)
+      {
+        var ipt = ele;
+        var pp = ele.parentElement.children[1];
+        removeClass(ipt, "alert");
+        removeClass(ipt, "success");
+        addClass(ipt, "alert");
+
+        removeClass(pp, "promptFail");
+        removeClass(pp, "promptSuccess");
+        addClass(pp, "promptFail");
+      }
+
+      function success(ele)
+      {
+        var ipt = ele;
+        var pp = ele.parentElement.children[1];
+
+        removeClass(ipt, "alert");
+        removeClass(ipt, "success");
+        addClass(ipt, "success");
+
+        removeClass(pp, "promptFail");
+        removeClass(pp, "promptSuccess");
+        addClass(pp, "promptSuccess");
+      }
+
+
+      function removeClass(ele, classname)
+      {
+        if(hasClass(ele, classname) == true)
+        {
+          var reg = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+          ele.className = ele.className.replace(reg, "");
+        }
+        else
+        {
+          return;
+        }
+      }
+
+      function addClass(ele, classname)
+      {
+        if(hasClass(ele, classname) == true)
+        {
+          return;
+        }
+        else
+        {
+          ele.className = ele.className + " " + classname;
+        }
+      }
+
+      function hasClass(ele, classname)
+      {
+        var reg = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+        if(ele.className.match(reg) != null)
+        {
+          return true;
+        }
+        else
+        {
+          return false;
+        }
+      }
+      
+
+    </script>
+  </body>
+</html>

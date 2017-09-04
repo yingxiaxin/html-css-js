@@ -1,0 +1,194 @@
+<!DOCTYPE>
+<html>  
+  <head>
+    <meta charset="utf-8">
+    <title>糯米学院任务06</title>
+
+    <style>
+      html
+      {
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body
+      {
+        width: 1280px;
+        height: 100%;
+        background-color: white;
+        padding: 1;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+      .container
+      {
+        width: 300px;
+        height: 300px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid grey;
+      }
+      .outer
+      {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        border-style: solid;
+        border-width: 2px;
+        border-color: #FF298C #FF298C #FF298C transparent;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        animation: roll 1s linear infinite;
+      }
+      .base
+      {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        width: 0;
+        height: 0;
+        border-width: 25px;
+        border-radius: 50%;
+        border-style: solid;
+        border-color: #FB8BBD #FB8BBD #FF298C #FF298C;
+        transform: rotate(45deg);
+      }
+      .innerBottom
+      {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        width: 0;
+        height: 0;
+        border-width: 25px;
+        border-radius: 50%;
+        border-style: solid;
+        border-color: transparent transparent #FF298C #FF298C;
+        transform: rotate(45deg);
+        z-index: 7;
+        animation: showBottom 2s linear 0.5s infinite;
+      }
+      .innerTop
+      {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        width: 0;
+        height: 0;
+        border-width: 25px;
+        border-radius: 50%;
+        border-style: solid;
+        border-color: transparent transparent #FB8BBD #FB8BBD;
+        transform: rotate(45deg);
+        animation: showTop 2s linear infinite;
+        z-index: 8;
+      }
+      @keyframes roll
+      {
+        0%
+        {
+          transform:rotateZ(0);
+        }        
+        100%
+        {
+          transform:rotateZ(-360deg);
+        }
+      }
+      @keyframes showBottom
+      {
+        0%
+        {
+          transform: rotateZ(45deg);
+        }
+        25%
+        {
+          transform: rotateZ(-135deg);
+        }
+        50%
+        {
+          transform: rotateZ(-135deg);
+        }
+        75%
+        {
+          transform: rotateZ(-315deg);
+        }
+        100%
+        {
+          transform: rotateZ(-315deg);
+        }
+      }
+      @keyframes showTop
+      {
+        0%
+        {
+          transform:rotateZ(45deg);
+          z-index: 8;
+        }
+        25%
+        {
+          transform: rotateZ(-135deg);
+          z-index: 8;
+        }
+        25.0000001%
+        {
+          transform: rotateZ(-135deg);
+          z-index: 6;
+        }
+        50%
+        {
+          transform: rotateZ(-135deg);
+          z-index: 6;
+        }
+        75%
+        {
+          transform: rotateZ(-315deg);
+          z-index: 6;
+        }
+        75.000001%
+        {
+          transform: rotateZ(-315deg);
+          z-index: 8;
+        }
+        100%
+        {
+          transform:rotateZ(-315deg);
+          z-index: 8;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="outer">
+
+      </div>
+      <div class="base">
+
+      </div>
+      <div class="innerBottom">
+
+      </div>
+      <div class="innerTop">
+
+      </div>
+    </div>
+  </body>
+</html>

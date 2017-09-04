@@ -1,0 +1,316 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>耀耀学院任务04</title>
+  </head>
+
+  <style>
+    html
+    {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      background-color: black;
+    }
+    body
+    {
+      width: 1280px;
+      height: 100%;
+      background-color: lightgrey;
+      margin: 0 auto;
+    }
+    .container
+    {
+      width: 500px;
+      height: 525px;
+      background-color: white;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    #rowNumber
+    {
+      width: 500px;
+      height: 25px;
+    }
+    #rowNumber i
+    {
+      display: inline-block;
+      width: 45px;
+      height: 25px;
+      font-style: normal;
+      font-weight: bold;
+      line-height: 25px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    #rowNumber2
+    {
+      width: 45px;
+      height: 450px;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+    }
+    #rowNumber2 i
+    {
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+      font-style: normal;
+      font-weight: bold;
+      line-height: 45px;
+      text-align: right;
+      vertical-align: middle;
+    }
+    #tablecell
+    {
+      width: 450px;
+      height: 450px;      
+    }
+    table
+    {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      border-collapse: collapse;
+    }
+    #row2
+    {
+      display: flex;
+      justify-content: space-between;
+    }
+    td
+    {
+      border: 1px solid grey;
+      box-sizing: border-box;
+      display: table-cell;
+      width: 45px;
+      height: 45px;
+      padding: 0;
+    }
+
+    #iptrow
+    {
+      width: 100%;
+      height: 30px;
+      margin: 10px 50px;
+    }
+    input
+    {
+      height: 30px;
+      width: 200px;
+      box-sizing: border-box;
+      border: 1px solid grey;
+      padding: 0;
+    }
+    a
+    {
+      width: 40px;
+      height: 30px;
+      text-decoration: none;
+      line-height: 30px;
+      background-color: #E84F51;
+      color: white;
+      border-radius: 3px;
+      text-align: center;
+      display: inline-block;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div id="rowNumber">
+        <i></i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i>
+      </div>
+      <div id="row2">
+        <div id="rowNumber2">
+          <i></i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i>            
+        </div>
+        <div id="tablecell">
+          <table>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          </table>
+        </div>
+      </div>
+      <div id="iptrow">
+        <input type="text">
+        <a href="javascript:void(0)" onclick="execute()">执行</a>
+        <a href="javascript:void(0)" onclick="execute()">前进</a>
+        <a href="javascript:void(0)" onclick="turnLeft()">左转</a>
+        <a href="javascript:void(0)" onclick="turnRight()">右转</a>
+        <a href="javascript:void(0)" onclick="turnBack()">后转</a>
+
+      </div>
+    </div>
+
+
+    <script>
+      var row = 5, col = 5;
+      var currentEle;
+      var robot;
+      var i = 0;
+
+      function execute()
+      {
+        var iptvalue = document.getElementsByTagName("input")[0].value;
+        var reg = new RegExp(/(^GO$)|(^TURN LEF$)|(^TURN RIG$)|(^TURN BAC$)/);
+        var matchRst = iptvalue.match(reg);
+        if(matchRst == null)
+        {
+          alert("请输入正确指令");
+        }
+        else
+        {
+          switch(matchRst[0])
+          {
+            case "GO":
+            {
+              var mod = i%4;
+              switch(mod)
+              {
+                case 0:
+                {
+                  moveTop(row, col);
+                  break;
+                }
+                case 1:
+                {
+                  moveRight(row, col);
+                  break;
+                }
+                case 2:
+                {
+                  moveBottom(row, col);
+                  break;
+                }
+                case 3:
+                {
+                  moveLeft(row, col);
+                  break;
+                }
+              }
+              break;
+            }
+            case "TURN LEF":
+            {
+              turnLeft();
+              break;
+            }
+            case "TURN RIG":
+            {
+              turnRight();
+              break;
+            }
+            case "TURN BAC":
+            {
+              turnBack();
+              break;
+            }
+          }
+        }
+      }
+
+      function turnLeft()
+      {
+        i = i + 3;
+        robot.style.transform = "rotate(" + i*90 + "deg)";
+      }
+
+      function turnRight()
+      {
+        i++;
+        robot.style.transform = "rotate(" + i*90 + "deg)";
+      }
+
+      function turnBack()
+      {
+        i = i + 2;
+        robot.style.transform = "rotate(" + i*90 + "deg)";
+      }
+
+
+      function moveTop(r, c)
+      {
+        if(row > 1)
+        {
+          var ele = document.getElementsByTagName("table")[0].children[0].children[r-1-1].children[c-1];
+          ele.appendChild(robot);
+          currentEle = ele;
+          row = row - 1;
+        }        
+      }
+
+      function moveBottom(r, c)
+      {
+        if(row < 10)
+        {
+          var ele = document.getElementsByTagName("table")[0].children[0].children[r-1+1].children[c-1];
+          ele.appendChild(robot);
+          currentEle = ele;
+          row = row + 1;
+        }        
+      }
+
+      function moveLeft(r, c)
+      {
+        if(col > 1)
+        {
+          var ele = document.getElementsByTagName("table")[0].children[0].children[r-1].children[c-1-1];
+          ele.appendChild(robot);
+          currentEle = ele;
+          col = col - 1;
+        }        
+      }
+
+      function moveRight(r, c)
+      {
+        if(col < 10)
+        {
+          var ele = document.getElementsByTagName("table")[0].children[0].children[r-1].children[c-1+1];
+          ele.appendChild(robot);
+          currentEle = ele;
+          col = col + 1;
+        }        
+      }
+
+      window.onload = function()
+      {
+        var divele = document.createElement("div");
+        divele.style.width = "44px";
+        divele.style.height = "44px";
+        divele.style.margin = 0;
+
+        var divhead = document.createElement("div");
+        divhead.style.width = "44px";
+        divhead.style.height = "10px";
+        divhead.style.backgroundColor = "blue";
+        divhead.style.margin = 0;
+
+        var divbody = document.createElement("div");
+        divbody.style.width = "44px";
+        divbody.style.height = "34px";
+        divbody.style.backgroundColor = "red";
+        divbody.style.margin = 0;
+
+        divele.appendChild(divhead);
+        divele.appendChild(divbody);
+
+        robot = divele;
+        var tditem = document.getElementsByTagName("table")[0].children[0].children[row-1].children[col-1];
+        currentEle = tditem;
+        currentEle.appendChild(robot);
+      };
+    </script>
+  </body>
+</html>

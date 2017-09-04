@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 09</title>
+
+
+    <style>
+      html
+      {
+        width: 100%;
+        height: 100%;
+        background-color: #1e1e1e;
+      }
+      body
+      {
+        width: 1280px;
+        height: 100%;
+        background-color: lightgrey;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 0;
+      }
+      .box
+      {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid grey;
+        margin: 4px 2px;
+        padding: 4px 2px;
+        background-color: white;
+        font-size: 12px;
+        align-items: stretch;
+        flex: 1;
+      }
+      .box1
+      {
+        width: 1000px;
+        height: 100px;
+        margin: 0 auto;
+      }
+      a
+      {
+        width: 80px;
+        height: 30px;
+        background-color: #E84F51;
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+        margin: 10px;
+        text-align: center;
+        line-height: 30px;
+      }
+      .btnDiv
+      {
+        background-color: lightgrey;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      input
+      {
+        height: 30px;
+      }
+      .active
+      {
+        background-color: #E84F51;
+      }
+      .chosen
+      {
+        background-color: blueviolet;
+      }
+    </style>
+  </head>
+<body>
+  
+  <div class="box1 box">
+    super
+    <div class="box">
+      car
+      <div class="box">
+        apple
+        <div class="box">pear</div>
+        <div class="box">pig</div>
+        <div class="box">cola</div>
+        <div class="box">soccer</div>
+      </div>
+      <div class="box">
+        phone
+      </div>
+      <div class="box">
+        stand
+        <div class="box">book</div>
+        <div class="box">school</div>
+      </div>
+    </div>
+
+    <div class="box">
+      note
+      <div class="box">
+        human
+        <div class="box">code</div>
+        <div class="box">operate</div>
+        <div class="box">man</div>
+      </div>
+      <div class="box">
+        program
+        <div class="box">
+          bernant
+          <div class="box">cat</div>
+        </div>
+        <div class="box">glass</div>
+      </div>
+    </div>
+    <div class="box">
+      fish
+    </div>
+  </div>
+
+  <div class="btnDiv">
+    <input type="text">
+    <a href="JavaScript:void(0)" onclick="find()">查找</a>
+    <a href="JavaScript:void(0)" onclick="del()">删除</a>
+    <a href="JavaScript:void(0)" onclick="add()">增加</a>
+  </div>
+  
+  <script>
+
+    var elements = [];
+    
+    function find()
+    {
+      elements.length = 0;
+      var root = document.getElementsByClassName("box1")[0];
+
+      iterate(root);
+
+      loop();
+    }
+
+
+    function loop()
+    {
+      var i=0;
+
+      if(document.getElementsByTagName("input")[0].value.length == 0)
+      {
+        alert("查询内容不能为空");
+        return;
+      }
+
+      var ints = setInterval(function(){
+
+        if(i > elements.length-1)
+        {
+          removeClass(elements[i-1], "active");
+          clearInterval(ints);
+          alert("未匹配到相关内容");
+          return;
+        }
+        else
+        {
+          if(i > 0)
+          {
+            removeClass(elements[i-1], "active");
+          }
+          addClass(elements[i], "active");
+
+          var ismatch = match(elements[i], document.getElementsByTagName("input")[0].value);
+          if(ismatch == true)
+          {
+            clearInterval(ints);
+            return;
+          }
+
+          i++;
+        }
+
+      }, 500);
+    }
+
+    function match(ele, str)
+    {
+      var textcontent = ele.firstChild.nodeValue;
+      var reg = new RegExp(".*" + str + ".*");
+      if(textcontent.match(reg) != null)
+      {
+        alert("匹配到内容：" + textcontent);
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+
+
+    function iterate(ele)
+    {
+      if(ele.children.length != 0)
+      {
+        elements.push(ele);
+        for(var item of ele.children)
+        {
+          iterate(item);
+        }
+      }
+      else
+      {
+        elements.push(ele);
+      }
+    }
+
+    function removeClass(ele, classname)
+    {
+      if(hasClass(ele, classname) == false)
+      {
+        return;
+      }
+      else
+      {
+        var reg = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+        ele.className = ele.className.replace(reg, "");
+      }
+    }
+
+    function addClass(ele, classname)
+    {
+      if(hasClass(ele, classname) == true)
+      {
+        return;
+      }
+      else
+      {
+        ele.className = ele.className + " " + classname;
+      }      
+    }
+
+    function hasClass(ele, classname)
+    {
+      var reg = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+      if(ele.className.match(reg) != null)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+
+
+    function removeAllChildren(ele)
+    {
+      white(ele.hasChildNodes())
+      {
+        ele.removeChild(ele.firstChildNode);
+      }
+      ele.parentNode.removeChild(ele);
+    }
+
+    function removeAllClass()
+    {
+      var rootdiv = document.getElementsByClassName("box1")[0];
+      var divs = Array.prototype.slice.call(rootdiv.getElementsByTagName("div"));
+      for(var dv of divs)
+      {
+        removeClass(dv, "chosen");
+      }
+    }
+
+    function del()
+    {
+      var delitem = document.getElementsByClassName("chosen")[0];
+      delitem.parentNode.removeChild(delitem);
+    }
+
+    function add()
+    {
+      var ctt = document.getElementsByTagName("input")[0].value;
+      var addParent = document.getElementsByClassName("chosen")[0];
+      var childdiv = document.createElement("div");
+      childdiv.innerText = ctt;
+      childdiv.setAttribute("class", "box");
+      childdiv.onclick = function(event)
+      {
+        removeAllClass();
+        addClass(this, "chosen");
+        stopPop(event);;
+      }
+      addParent.appendChild(childdiv);
+    }
+
+    function init()
+    {
+      var root = document.getElementsByClassName("box1")[0];
+      iterate(root);
+
+      for(var divitem of elements)
+      {
+        divitem.onclick = function(event)
+        {
+          removeAllClass();
+          addClass(this, "chosen");
+          stopPop(event);
+        }
+      }
+    }
+
+
+    //阻止点击该元素触发父元素
+    function stopPop(e) 
+    {
+      if(e) 
+      {
+          e.stopPropagation(); //非IE
+      } 
+      else 
+      {
+          window.event.cancelBubble = true; //IE阻止冒泡方法
+      }
+    }
+
+    window.onload = init;
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 08</title>
+
+
+    <style>
+      html
+      {
+        width: 100%;
+        height: 100%;
+        background-color: #1e1e1e;
+      }
+      body
+      {
+        width: 1280px;
+        height: 100%;
+        background-color: lightgrey;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      div
+      {
+        display: flex;
+        justify-content: space-around;
+        border: 1px solid rebeccapurple;
+        background-color: white;
+        align-items: center;
+      }
+      .active
+      {
+        background-color: #E84F51;
+      }
+      .root
+      {
+        width: 1200px;
+        height: 600px;
+      }
+      .second
+      {
+        width: 550px;
+        height: 350px;
+      }
+      .third
+      {
+        width: 220px;
+        height: 200px;
+      }
+      .fourth
+      {
+        width: 90px;
+        height: 100px;
+      }
+      a
+      {
+        width: 100px;
+        height: 30px;
+        background-color: #E84F51;
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+        margin: 10px;
+        text-align: center;
+        line-height: 30px;
+      }
+      .btnDiv
+      {
+        background-color: lightgrey;
+        border: none;
+      }
+      input
+      {
+        height: 30px;
+      }
+    </style>
+  </head>
+<body>
+  
+  <div class="root">
+    super
+    <div class="second">
+      car
+      <div class="third">
+        apple
+        <div class="fourth">pear</div>
+        <div class="fourth">pig</div>
+        <div class="fourth">cola</div>
+        <div class="fourth">soccer</div>
+      </div>
+      <div class="third">
+        phone
+      </div>
+      <div class="third">
+        stand
+        <div class="fourth">book</div>
+        <div class="fourth">school</div>
+      </div>
+    </div>
+
+    <div class="second">
+      note
+      <div class="third">
+        human
+        <div class="fourth">code</div>
+        <div class="fourth">operate</div>
+        <div class="fourth">man</div>
+      </div>
+      <div class="third">
+        program
+        <div class="fourth">
+          bernant
+          <div class="fifth">cat</div>
+        </div>
+        <div class="fourth">glass</div>
+      </div>
+    </div>
+    <div class="second">
+      fish
+    </div>
+  </div>
+
+  <div class="btnDiv">
+    <input type="text">
+    <a href="JavaScript:void(0)" onclick="find()">查找</a>
+  </div>
+  
+  <script>
+
+    var elements = [];
+    
+    function find()
+    {
+      elements.length = 0;
+      var root = document.getElementsByClassName("root")[0];
+      iterate(root);
+
+      loop();
+    }
+
+
+    function loop()
+    {
+      var i=0;
+
+      if(document.getElementsByTagName("input")[0].value.length == 0)
+      {
+        alert("查询内容不能为空");
+        return;
+      }
+
+      var ints = setInterval(function(){
+
+        if(i > elements.length-1)
+        {
+          removeClass(elements[i-1], "active");
+          clearInterval(ints);
+          alert("未匹配到相关内容");
+          return;
+        }
+        else
+        {
+          if(i > 0)
+          {
+            removeClass(elements[i-1], "active");
+          }
+          addClass(elements[i], "active");
+
+          var ismatch = match(elements[i], document.getElementsByTagName("input")[0].value);
+          if(ismatch == true)
+          {
+            clearInterval(ints);
+            return;
+          }
+
+          i++;
+        }
+
+      }, 500);
+    }
+
+    function match(ele, str)
+    {
+      var textcontent = ele.firstChild.nodeValue;
+      var reg = new RegExp(".*" + str + ".*");
+      if(textcontent.match(reg) != null)
+      {
+        alert("匹配到内容：" + textcontent);
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+
+
+    function iterate(ele)
+    {
+      if(ele.children.length != 0)
+      {
+        elements.push(ele);
+        for(var item of ele.children)
+        {
+          iterate(item);
+        }
+      }
+      else
+      {
+        elements.push(ele);
+      }
+    }
+
+    function removeClass(ele, classname)
+    {
+      if(hasClass(ele, classname) == false)
+      {
+        return;
+      }
+      else
+      {
+        var reg = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+        ele.className = ele.className.replace(reg, "");
+      }
+    }
+
+    function addClass(ele, classname)
+    {
+      if(hasClass(ele, classname) == true)
+      {
+        return;
+      }
+      else
+      {
+        ele.className = ele.className + " " + classname;
+      }      
+    }
+
+    function hasClass(ele, classname)
+    {
+      var reg = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+      if(ele.className.match(reg) != null)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>

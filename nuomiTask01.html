@@ -1,0 +1,154 @@
+<!DOCTYPE>
+<html>  
+  <head>
+    <meta charset="utf-8">
+    <title>糯米学院任务01</title>
+    <style>
+      html
+      {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        background-color: black;
+      }
+      body
+      {
+        width: 1280px;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 1px;
+        margin: 0 auto;
+        background-color: white;
+      }
+      div
+      {
+        width: 600px;
+        height: 394px;
+        border: 1px solid grey;
+        margin: 50px auto;
+        background: url(images/yourname.png);
+        position: relative;
+      }
+      div::before
+      {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: url(images/yourname.png);
+        transition: filter 1s linear;
+      }
+      div:hover::before
+      {
+        filter: blur(5px);
+      }
+      a
+      {
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        line-height: 100px;
+        font-size: 20px;
+        font-weight: bold;
+        position: relative;
+        top: 14px;
+        opacity: 0;
+        transition: opacity 1s linear, top 1s linear;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-image: -webkit-linear-gradient(left,white,red 12.5%,purple 25%,red 37.5%, white 50%, red 62.5%, purple 75%, red 87.5%, white 100%);
+        background-size: 200% 100%;
+      }
+      div:hover a
+      {
+        opacity: 1;
+        top: 0;
+        animation: gradient 3s linear infinite;
+      }
+      @keyframes gradient
+      {
+        from{background-position: 0% 0%;}
+        to{background-position: -100% 0%;}
+      }
+      section
+      {
+        width: 420px;
+        height: 200px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -65%);
+      }
+      article
+      {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(255, 255, 255, 0);
+        transition-timing-function: background-color 1s linear;
+      }
+      div:hover article
+      {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+      section::before, section::after, article::before, article::after
+      {
+        content: '';
+        position: absolute;
+        background-color: white;
+        transition: transform 1s;
+        transition-timing-function: linear;
+      }
+      section::before, section::after
+      {
+        width: 2px;
+        height: 100%;
+        transform: scale3d(0, 0, 1);
+      }
+      section::before
+      {
+        left: 0;
+      }
+      section::after
+      {
+        right: 0;
+      }
+      article::before, article::after
+      {
+        height: 2px;
+        width: 100%;
+        transform: scale3d(0, 0, 1);
+      }
+      article::before
+      {
+        top: 0;
+      }
+      article::after
+      {
+        bottom: 0;
+      }
+      div:hover section::before, div:hover section::after, div:hover article::before, div:hover article::after
+      {
+        transform: scale3d(1, 1, 1);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="imgcontainer">
+      <section>
+        <article>
+          <a href="https://baike.baidu.com/item/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97%E3%80%82/19127928?fr=aladdin&fromid=19126915&fromtitle=%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97">
+            <pre>穿梭错位的时空，仰望陨落的星辰，你没留下
+  你的名字 我却无法忘记那句“我喜欢你”</pre>
+          </a>
+        </article>
+      </section>
+    </div>
+  </body>
+</html>

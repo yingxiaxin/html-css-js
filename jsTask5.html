@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 04</title>
+
+
+    <style>
+      html
+      {
+        width: 100%;
+        height: 100%;
+        background-color: #1e1e1e;
+      }
+      body
+      {
+        width: 1080px;
+        height: 100%;
+        background-color: lightgrey;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 0;
+      }
+      #btnContainer
+      {
+        display: flex;
+        width: 100%;
+        height: 100px;
+        justify-content: center;
+        align-items: center;
+      }
+      a
+      {
+        text-decoration: none;
+        width: 60px;
+        height: 30px;
+        line-height: 30px;
+        margin: 0 10px;
+        background-color: #E84F51;
+        color: white;
+        text-align: center;
+      }
+      input
+      {
+        height: 30px;
+      }
+      #display
+      {
+        width: 800px;
+        background-color: white;
+        margin: 30px auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+      }
+    </style>
+  </head>
+<body>  
+  <div id="btnContainer">
+    <input type="text" id="numinput">
+    <a href="JavaScript:void(0)" onclick="insertLeft()">左侧入</a>
+    <a href="JavaScript:void(0)" onclick="insertRight()">右侧入</a>
+    <a href="JavaScript:void(0)" onclick="popLeft()">左侧出</a>
+    <a href="JavaScript:void(0)" onclick="popRight()">右侧出</a>
+    <a href="JavaScript:void(0)" onclick="sort()">排序</a>
+  </div>
+  <div id="display">
+
+  </div>
+
+
+  
+<script>
+  var list = [];
+
+  function validateNum(num)
+  {
+    if(num.length==0 || isNaN(num)==true || num.indexOf(" ")!= -1)
+    {
+      alert("请输入合法有效的数字，并且不要包含空格！");
+      return false;
+    }
+    else if(num< 10 || num>100)
+    {
+      alert("请输入10-100以内的数字！");
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }
+
+
+  function createEle(index)
+  {
+      var newNum = document.createElement("a");
+      newNum.style.textDecoration = "none";
+      newNum.style.width = "30px";
+      newNum.style.height = index + "px";
+      newNum.style.color = "white";
+      newNum.style.backgroundColor = "#E84F51";
+      newNum.style.textAlign = "center";
+      newNum.style.cursor = "pointer";
+      newNum.addEventListener("click", onTagClick);
+      newNum.innerHTML = index;
+      return newNum;
+  }
+
+  /**
+  * 排序算法
+  */
+  function sort()
+  {
+    var container = document.getElementById("display");
+    var len = container.children.length;
+    for(var j=0; j<len; j++)
+    {
+      for(var i=len-1; i>=1; i--)
+      {
+        var item_la = container.children[i];
+        var item_pre = container.children[i-1];
+        if(parseInt(item_la.innerHTML) <= parseInt(item_pre.innerHTML))
+        {
+          container.insertBefore(item_la, item_pre);
+        }
+      }
+    }    
+  }
+
+
+  function insertLeft()
+  {
+    var input = document.getElementById("numinput");
+    var container = document.getElementById("display");
+    var content = input.value;
+    var validation = validateNum(content);
+    if(validation == false)
+    {
+      return;
+    }
+    else
+    {
+      var newEle = createEle(content);
+      var len = container.children.length;
+      if(len == 0)
+      {
+        container.appendChild(newEle);
+      }
+      else
+      {
+        container.insertBefore(newEle, container.children[0]);        
+      }
+      input.value = "";
+    }
+  }
+
+  function insertRight()
+  {
+    var input = document.getElementById("numinput");
+    var container = document.getElementById("display");
+    var content = input.value;
+    var validation = validateNum(content);
+    if(validation == false)
+    {
+      return;
+    } 
+    else
+    {
+      var newEle = createEle(content);
+      container.appendChild(newEle);
+      input.value = ""; 
+    }
+  }
+
+  function popLeft()
+  {
+    var container = document.getElementById("display");
+    if(container.children.length != 0)
+    {
+      var item = container.children[0];
+      alert(item.innerHTML);
+      container.removeChild(item);
+    }
+  }
+
+  function popRight()
+  {
+    var container = document.getElementById("display");
+    if(container.children.length != 0)
+    {
+      var item = container.children[container.children.length-1];
+      alert(item.innerHTML);
+      container.removeChild(item);
+    }
+  }
+
+
+  function onTagClick()
+  {
+    var item = event.target;
+    var container = document.getElementById("display");
+    container.removeChild(item);
+  }
+
+</script>
+</body>
+</html>

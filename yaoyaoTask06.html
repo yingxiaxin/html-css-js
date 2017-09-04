@@ -1,0 +1,163 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>耀耀学院任务06</title>
+  </head>
+
+  <style>
+    html
+    {
+      width: 100%;
+      height: 100%;
+      background-color: white;
+    }
+    body
+    {
+      width: 1280px;
+      height: 1280px;
+      background-color: lightblue;
+      margin: 0 auto;
+      padding: 0;
+    }
+    input
+    {
+      width: 80px;
+      height: 50px;
+      position: absolute;
+      left: 50%;
+      top: 10%;
+      transform: translate(-50%, -50%);
+      font-size: 16px;
+    }
+    div
+    {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    p
+    {
+      font-size: 16px;
+      text-align: left;
+      line-height: 16px;
+      margin-left: 20px;
+    }
+    #btnContainer
+    {
+      text-align: right;
+      width: 100%;
+      height: 50px;
+      position: absolute;
+      bottom: 20px;
+    }
+    a
+    {
+      display: inline-block;
+      width: 100px;
+      height: 50px;
+      text-decoration: none;
+      font-size: 16px;
+      color: white;
+      background-color: grey;
+      line-height: 50px;
+      margin: 0 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+  </style>
+  <body>
+    <input type="button" value="弹出" onclick="popUp(event)">
+
+
+
+
+
+    <script>
+      var body = document.body;
+      var msk;
+      var pp;
+
+      function popUp(event)
+      {
+        event.stopPropagation();
+        if(msk != null || pp != null)
+        {
+          return;
+        }
+        var mask = document.createElement("div");
+        mask.style.height = document.documentElement.scrollHeight + "px";
+        mask.style.width = "100%";
+        mask.style.zIndex = "0";
+        mask.style.opacity = "0.5";
+        mask.style.backgroundColor = "grey";
+        body.appendChild(mask);
+        msk = mask;
+
+        var div1 = document.createElement("div");
+        div1.style.height = "250px";
+        div1.style.width = "550px";
+        div1.style.backgroundColor = "grey";
+        div1.style.position = "fixed";
+        div1.style.left = "50%";
+        div1.style.top = "50%";
+        div1.style.transform = "translate(-50%, -50%)";
+
+        var divheader = document.createElement("div");
+        divheader.style.height = "50px";
+        divheader.style.width = "100%";
+
+        var pheader = document.createElement("p");
+        pheader.innerText = "这是一个浮出层";
+
+        divheader.appendChild(pheader);
+
+        var div2 = document.createElement("div");
+        div2.style.height = "200px";
+        div2.style.width = "100%";
+        div2.style.backgroundColor = "white";
+
+        var p2 = document.createElement("p");
+        p2.innerText = "这是一个浮出层";
+        div2.appendChild(p2);
+
+        var div3 = document.createElement("div");
+        div3.id = "btnContainer";
+
+        var a1 = document.createElement("a");
+        a1.innerText = "确定";
+        var a2 = document.createElement("a");
+        a2.innerText = "取消";
+
+        a1.onclick = removePop;
+        a2.onclick = removePop;
+
+        div3.appendChild(a1);
+        div3.appendChild(a2);
+
+        div2.appendChild(div3);
+
+        div1.appendChild(divheader);
+        div1.appendChild(div2);        
+
+        body.appendChild(div1);
+        pp = div1;
+
+        mask.onclick = removePop;
+        body.onclick = removePop;
+      }
+
+
+      function removePop(event)
+      {
+        event.stopPropagation();
+        body.removeChild(msk);
+        body.removeChild(pp);
+        msk = null;
+        pp = null;
+        body.onclick = function(){};
+      }
+    </script>
+  </body>
+</html>

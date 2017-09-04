@@ -1,0 +1,250 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>耀耀学院任务07</title>
+  </head>
+
+  <style>
+    html
+    {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      background-color: black;
+    }
+    body
+    {
+      width: 1280px;
+      height: 100%;
+      background-color: lightgrey;
+      padding: 0;
+      margin: 0 auto;
+    }
+    table
+    {
+      width: 500px;      
+      box-sizing: border-box;
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translate(-50%, 0);
+      border-collapse: collapse;
+    }
+    tr
+    {
+      height: 40px;
+      min-height: 40px;
+    }
+    thead td
+    {
+      background-color: black;
+      color: white;
+      text-align: center;
+      border: 1px solid lightgrey;
+      cursor: pointer;
+      position: relative;
+    }
+    thead tr td:nth-child(n+2):after
+    {
+      content: "";
+      position: absolute;
+      top: 9px;
+      right: 5px;
+      border-bottom: 5px solid #fff;
+      border-right: 5px solid transparent;
+      border-left: 5px solid transparent;
+    }    
+    thead tr td:nth-child(n+2):before
+    {
+      content: "";
+      position: absolute;
+      top: 18px;
+      right: 5px;
+      border-top: 5px solid #fff;
+      border-right: 5px solid transparent;
+      border-left: 5px solid transparent;
+    }
+    tbody td
+    {
+      background-color: white;
+      text-align: center;
+      border: 1px solid lightgrey;
+    }
+    div
+    {
+      width: 500px;
+      height: 30px;
+      box-sizing: border-box;
+      position: absolute;
+      top: 5%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: right;
+    }
+    a
+    {
+      text-decoration: none;
+      display: inline-block;
+      margin-left: 20px;
+      width: 80px;
+      height: 30px;
+      background-color: #E84F51;
+      color: white;
+      line-height: 30px;
+      cursor: pointer;
+      text-align: center;
+      border-radius: 5px;
+    }
+  </style>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <td>姓名</td>
+          <td>语文</td>
+          <td>数学</td>
+          <td>英语</td>
+          <td>总分</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>小明</td>
+          <td>65</td>
+          <td>70</td>
+          <td>62</td>
+          <td>197</td>
+        </tr>
+        <tr>
+          <td>小红</td>
+          <td>88</td>
+          <td>70</td>
+          <td>90</td>
+          <td>248</td>
+        </tr>
+        <tr>
+          <td>小黄</td>
+          <td>90</td>
+          <td>81</td>
+          <td>88</td>
+          <td>257</td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <a href="JavaScript:void(0)" id="add" onclick="addRow()">增加一行</a>
+      <a href="JavaScript:void(0)" id="del" onclick="delRow()">减少一行</a>
+    </div>
+
+
+    <script>
+      
+      var isAsc = true;
+      var data = [];
+
+      (function()
+      {
+        var table = document.getElementsByTagName("table")[0];
+        var add = document.getElementById("add");
+        var del = document.getElementById("del");
+        var table_h = document.getElementsByTagName("thead")[0];
+        var btns = table_h.getElementsByTagName("td");
+        var table_body = document.getElementsByTagName("tbody")[0];
+        var items = table_body.getElementsByTagName("td");
+
+
+        setEditable(items);
+        setData();
+
+        for(var k=1; k<btns.length; k++)
+        {
+          btns[k].onclick = updateTable;
+        }
+
+      })();
+
+      function updateTable(event)
+      {
+        setData();
+        var idx = event.target.cellIndex;
+        isAsc = !isAsc;
+        updateData(idx);
+        putData();
+      }
+
+      function updateData(index)
+      {
+        data.sort(function(a, b)
+        {
+          if(isAsc == true)
+          {
+            return a[index] - b[index];
+          }
+          else
+          {
+            return b[index] - a[index];
+          }
+        });
+      }
+
+      function putData()
+      {
+        var trs = document.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+        for(var i=0; i<data.length; i++)
+        {
+          var tds = trs[i].getElementsByTagName("td");
+          for(var j=0; j<tds.length; j++)
+          {
+            tds[j].innerText = data[i][j];
+          }
+        }
+      }
+
+      function setData()
+      {
+        data = [];
+        var trs = document.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+        for(var tr of trs)
+        {
+          var tds = tr.getElementsByTagName("td");
+          var data2 = [];
+          for(var td of tds)
+          {
+            data2.push(td.innerText);
+          }
+          data.push(data2);
+        }
+      }
+
+      function setEditable(tdArray)
+      {
+        for(var td of tdArray)
+        {
+          td.contentEditable = true;
+        }
+      }
+
+      function addRow()
+      {
+        var line = "<td></td><td></td><td></td><td></td><td></td>";
+        var tr = document.createElement("tr");
+        tr.innerHTML = line;
+        var tb = document.getElementsByTagName("tbody")[0];
+        tb.appendChild(tr);
+        
+        setEditable(tb.getElementsByTagName("td"));
+      }
+
+      function delRow()
+      {
+        var tb = document.getElementsByTagName("tbody")[0];
+        var trs = tb.getElementsByTagName("tr");
+        tb.removeChild(trs[trs.length-1]);
+      }
+
+    </script>
+  </body>
+</html>

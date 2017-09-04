@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 07</title>
+
+
+    <style>
+      html
+      {
+        width: 100%;
+        height: 100%;
+        background-color: #1e1e1e;
+      }
+      body
+      {
+        width: 1280px;
+        height: 100%;
+        background-color: lightgrey;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      div
+      {
+        display: flex;
+        justify-content: space-around;
+        border: 1px solid rebeccapurple;
+        background-color: white;
+        align-items: center;
+      }
+      .active
+      {
+        background-color: #E84F51;
+      }
+      .root
+      {
+        width: 1200px;
+        height: 600px;
+      }
+      .second
+      {
+        width: 550px;
+        height: 350px;
+      }
+      .third
+      {
+        width: 220px;
+        height: 200px;
+      }
+      .fourth
+      {
+        width: 90px;
+        height: 100px;
+      }
+      a
+      {
+        width: 100px;
+        height: 30px;
+        background-color: #E84F51;
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+        margin: 10px;
+        text-align: center;
+        line-height: 30px;
+      }
+      .btnDiv
+      {
+        background-color: lightgrey;
+        border: none;
+      }
+    </style>
+  </head>
+<body>
+  
+  <div class="root">
+    <div class="second">
+      <div class="third">
+        <div class="fourth"></div>
+        <div class="fourth"></div>
+      </div>
+      <div class="third">
+        <div class="fourth"></div>
+        <div class="fourth"></div>
+      </div>
+    </div>
+
+    <div class="second">
+      <div class="third">
+        <div class="fourth"></div>
+        <div class="fourth"></div>
+      </div>
+      <div class="third">
+        <div class="fourth"></div>
+        <div class="fourth"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btnDiv">
+    <a href="JavaScript:void(0)" onclick="pre()">前序遍历</a>
+    <a href="JavaScript:void(0)" onclick="mid()">中序遍历</a>
+    <a href="JavaScript:void(0)" onclick="post()">后序遍历</a>
+  </div>
+  
+  <script>
+    var preorder = [];
+    var inorder = [];
+    var postorder = [];
+
+    function pre()
+    {
+      var rootNode = document.getElementsByClassName("root");
+      qianxu(rootNode[0]);
+
+      var i = 0;
+      var flag = setInterval(function(){
+        if(i >= preorder.length)
+        {
+          removeClass(preorder[preorder.length-1], "active");
+          clearInterval(this);
+          return;
+        }
+
+        if(i > 0)
+        {
+          removeClass(preorder[i-1], "active");
+        }
+        addClass(preorder[i], "active");
+        i++;
+
+      }, 1000);
+    }
+
+    function qianxu(ele)
+    {
+      if(ele.children.length != 0)
+      {
+        preorder.push(ele);
+        qianxu(ele.children[0]);
+        qianxu(ele.children[1]);
+      }
+      else
+      {
+        preorder.push(ele);
+      }
+    }
+
+    function mid()
+    {
+      var rootNode = document.getElementsByClassName("root");
+      zhongxu(rootNode[0]);
+
+      var i = 0;
+      var flag = setInterval(function(){
+        if(i >= inorder.length)
+        {
+          removeClass(inorder[inorder.length-1], "active");
+          clearInterval(this);
+          return;
+        }
+
+        if(i > 0)
+        {
+          removeClass(inorder[i-1], "active");
+        }
+        addClass(inorder[i], "active");
+        i++;
+
+      }, 1000);
+    }
+
+
+    
+    function zhongxu(ele)
+    {
+      if(ele.children.length != 0)
+      {
+        zhongxu(ele.children[0]);
+        inorder.push(ele);
+        zhongxu(ele.children[1]);
+      }
+      else
+      {
+        inorder.push(ele);
+      }
+    }
+
+    function post()
+    {
+      var rootNode = document.getElementsByClassName("root");
+      houxu(rootNode[0]);
+
+      var i = 0;
+      var flag = setInterval(function(){
+        if(i >= postorder.length)
+        {
+          removeClass(postorder[postorder.length-1], "active");
+          clearInterval(this);
+          return;
+        }
+
+        if(i > 0)
+        {
+          removeClass(postorder[i-1], "active");
+        }
+        addClass(postorder[i], "active");
+        i++;
+
+      }, 1000);
+    }
+
+
+    function houxu(ele)
+    {
+      if(ele.children.length != 0)
+      {
+        houxu(ele.children[0]);
+        houxu(ele.children[1]);
+        postorder.push(ele);
+      }
+      else
+      {
+        postorder.push(ele);
+      }
+    }
+
+    function removeClass(ele, classname)
+    {
+      if(hasClass(ele, classname) == false)
+      {
+        return;
+      }
+      else
+      {
+        var reg = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+        ele.className = ele.className.replace(reg, "");
+      }
+    }
+
+    function addClass(ele, classname)
+    {
+      if(hasClass(ele, classname) == true)
+      {
+        return;
+      }
+      else
+      {
+        ele.className = ele.className + " " + classname;
+      }      
+    }
+
+    function hasClass(ele, classname)
+    {
+      var reg = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+      if(ele.className.match(reg) != null)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+    
+  </script>
+</body>
+</html>

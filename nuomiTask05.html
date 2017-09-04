@@ -1,0 +1,48 @@
+<!DOCTYPE>
+<html>  
+  <head>
+    <meta charset="utf-8">
+    <title>糯米学院任务05</title>
+    <link rel="stylesheet" href="css/nuomiTask05.css">
+  </head>
+  <body>
+    <main class="stage">
+      <p>照片滚动</p>
+      <div class="imgContainer">
+        <img src="images/dk.png" width="211" height="100" alt="dk">
+        <img src="images/arrow.png" width="211" height="100" alt="arrow">
+        <img src="images/panda.png" width="211" height="100" alt="panda">
+        <img src="images/frostWyrm.png" width="211" height="100" alt="frostWyrm">
+        <img src="images/dwarf.png" width="211" height="100" alt="dwarf">
+        <img src="images/heros.png" width="211" height="100" alt="heros">
+      </div>
+    </main>
+
+
+
+    <script>
+
+      window.onload = addListener;
+
+      function addListener()
+      {
+        var imgs = document.getElementsByTagName("img");
+        var ctn = document.getElementsByClassName("imgContainer")[0];
+
+        for(var img of imgs)
+        {
+          img.onmouseover = function()
+          {
+            ctn.style.WebkitAnimationPlayState = "paused";
+          }
+
+          img.onmouseout = function()
+          {
+            ctn.style.WebkitAnimationPlayState = "running";
+          }
+        }        
+      }
+
+    </script>
+  </body>
+</html>

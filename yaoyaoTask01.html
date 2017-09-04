@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task YaoYao01</title>
+
+
+    <style>
+      html
+      {
+        width: 100%;
+        height: 100%;
+        background-color: #1e1e1e;
+      }
+      body
+      {
+        width: 1280px;
+        height: 100%;
+        background-color: lightgrey;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 0;
+      }
+      div
+      {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      input
+      {
+        height: 30px;
+        width: 200px;
+        margin: 0 10px;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid grey;
+      }
+      /**input:focus
+      {
+        box-shadow: 0 0 0 1px rebeccapurple;
+      }**/
+      .alert
+      {
+        box-shadow: 0 0 0 1px #D90015;     
+        border: none;
+      }
+      .success
+      {
+        box-shadow: 0 0 0 1px #61B545;
+        border: none;  
+      }
+      a
+      {
+        text-decoration: none;
+        width: 80px;
+        height: 30px;
+        color: white;
+        background-color: cornflowerblue;
+        border-radius: 2px;
+        cursor: pointer;
+        line-height: 30px;
+        font-size: 20px;
+        text-align: center;
+        margin: 0 10px;
+      }
+      span
+      {
+        font-size: 20px;
+        line-height: 30px;
+        margin: 0 10px;
+      }
+      p
+      {
+        box-sizing: border-box;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-65%, 5px);
+        font-size: 14px;
+        color: grey;
+        border: none;
+      }
+      .promptFail
+      {
+        color: #D90015;
+      }
+      .promptSuccess
+      {
+        color: #61B545;
+      }
+    </style>
+  </head>
+  <body>
+  
+    <div>
+      <span>名称</span>
+      <input type="text">
+      <a href="JavaScript:void(0)" onclick="validate()">验证</a>
+    </div>
+
+    <p>必填，长度为4~16个字符</p>
+  
+    <script>
+
+      function validate()
+      {
+        var txt = document.getElementsByTagName("input")[0].value;
+        var prompt = document.getElementsByTagName("p")[0];
+
+        if(txt.length == 0)
+        {
+          fail();
+          prompt.innerText = "名称不能为空";
+        }
+        else
+        {
+          var regchinese = new RegExp(/[\u4e00-\u9fa5]/g);
+          //一个中文字符用两个英文字符替换，然后再计算是不是超过长度
+          txt = txt.replace(regchinese, "aa");
+          if(txt.length < 4 || txt.length > 16)
+          {
+            fail();
+            prompt.innerText = "名称长度需在4-16个字符之间，中文占两个字符";
+          }
+          else
+          {
+            success();
+            prompt.innerText = "名称格式正确";
+          }
+        }
+      }
+
+      function fail()
+      {
+        var ipt = document.getElementsByTagName("input")[0];
+        var pp = document.getElementsByTagName("p")[0];
+        removeClass(ipt, "alert");
+        removeClass(ipt, "success");
+        addClass(ipt, "alert");
+
+        removeClass(pp, "promptFail");
+        removeClass(pp, "promptSuccess");
+        addClass(pp, "promptFail");
+      }
+
+      function success()
+      {
+        var ipt = document.getElementsByTagName("input")[0];
+        var pp = document.getElementsByTagName("p")[0];
+
+        removeClass(ipt, "alert");
+        removeClass(ipt, "success");
+        addClass(ipt, "success");
+
+        removeClass(pp, "promptFail");
+        removeClass(pp, "promptSuccess");
+        addClass(pp, "promptSuccess");
+      }
+
+
+      function removeClass(ele, classname)
+      {
+        if(hasClass(ele, classname) == true)
+        {
+          var reg = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+          ele.className = ele.className.replace(reg, "");
+        }
+        else
+        {
+          return;
+        }
+      }
+
+      function addClass(ele, classname)
+      {
+        if(hasClass(ele, classname) == true)
+        {
+          return;
+        }
+        else
+        {
+          ele.className = ele.className + " " + classname;
+        }
+      }
+
+      function hasClass(ele, classname)
+      {
+        var reg = new RegExp("(^|\\s)" + classname + "(\\s|$)");
+        if(ele.className.match(reg) != null)
+        {
+          return true;
+        }
+        else
+        {
+          return false;
+        }
+      }
+      
+
+    </script>
+  </body>
+</html>

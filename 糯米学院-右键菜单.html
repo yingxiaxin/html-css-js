@@ -1,0 +1,122 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>糯米学院-自定义右键菜单</title>
+        <style>
+            html
+            {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+                position: relative;
+            }
+            body
+            {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+                background-color: black;
+                color: white;
+            }
+            .menu
+            {
+                width: 120px;
+                height: 160px;
+                margin: 0;
+                padding: 0;
+                position: fixed;
+            }
+            li
+            {
+                height: 40px;
+                line-height: 40px;
+                padding-left: 10px;
+                display: block;
+                width: 100%;
+                border-bottom: 1px solid grey;
+                background-color: white;
+                color: black;
+                cursor: pointer;
+            }
+            li:hover
+            {
+                background-color: lightgrey;
+            }
+        </style>
+    </head>
+    <body>
+        随意点击右键
+    </body>
+    <script>
+        const MENU_LIST = ['Menu item 1', 'Menu item 2', 'Menu item 3', 'Menu item 4'];
+        var bd = document.getElementsByTagName("body")[0];
+        var menuElements = document.createElement("ul");
+
+        menuElements.setAttribute("class", "menu");
+
+        function createElements()
+        {
+            MENU_LIST.forEach(function(ele, index)
+            {
+                var item = document.createElement("li");
+                item.innerHTML = ele;
+                menuElements.appendChild(item);
+            });
+        }
+
+        function bindEvents()
+        {
+            bd.addEventListener("contextmenu", popUpMenu);
+
+            menuElements.addEventListener("contextmenu", function(e)
+            {
+                window.event.returnValue = false;
+                e.stopPropagation();
+                return false;
+            });
+
+            menuElements.addEventListener("click", function(e)
+            {
+                alert(e.target.innerText);
+                e.stopPropagation();
+                if(bd.getElementsByClassName("menu").length > 0)
+                {
+                    bd.removeChild(menuElements);
+                }
+            })
+        }
+
+        function popUpMenu(e)
+        {
+            calculatePosition(e);
+            bd.appendChild(menuElements);
+
+            //阻止默认的右键菜单
+            window.event.returnValue=false;
+            e.stopPropagation(); //阻止事件冒泡
+            return false;
+        }
+
+        function calculatePosition(e)
+        {
+            var eleWidth = 120;
+            var eleHeight = 160;
+            var currentX = e.clientX + eleWidth > bd.clientWidth? (e.clientX - eleWidth):e.clientX;
+            var currentY = e.clientY + eleHeight > bd.clientHeight? (e.clientY - eleHeight):e.clientY;
+
+            menuElements.style.left = currentX;
+            menuElements.style.top = currentY;
+        }        
+
+        function init()
+        {
+            createElements();
+            bindEvents();
+        }
+
+        init();
+    </script>
+</html>
