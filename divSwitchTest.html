@@ -31,6 +31,7 @@
         top: 200px;
         left: 100px;
         background-color: gold;
+        z-index: 1;
       }
       #div2
       {
@@ -40,7 +41,7 @@
         top: 300px;
         left: 500px;
         background-color: blueviolet;
-        transform: translateY(300px);
+        z-index: 1;
       }
       a
       {
@@ -165,6 +166,10 @@
                     after:function()
                     {
                       doit();
+                    },
+                    before:function()
+                    {
+                      float();
                     }
                   };
       ani.add(targets, props5, 2000, options).start();
@@ -181,6 +186,19 @@
         divsm.style.transform = 'none';
         divlg.style.transform = 'none';
       };
+
+
+      function float()
+      {
+        divsm.style.position = 'fixed';
+        divlg.style.position = 'fixed';
+
+        divsm.style.zIndex = '99';
+        divlg.style.zIndex = '99';
+
+        divsm.style.float = 'left';
+        divlg.style.float = 'left';
+      }
     }
 
 
