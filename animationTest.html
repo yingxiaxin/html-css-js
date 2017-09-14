@@ -42,9 +42,38 @@
         background-color: blueviolet;
         transform: translateY(300px);
       }
+      a
+      {
+        text-decoration: none;
+        display: inline-block;
+        width: 60px;
+        height: 30px;
+        border-radius: 3px;
+        background-color: palevioletred;
+        color: white;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+      }
+      .btn
+      {
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
     </style>
   </head>
 <body>
+
+  <div class="btn">
+      <a href="javascript:void(0)" onclick="start();">start</a>
+      <a href="javascript:void(0)" onclick="pause();">pause</a>
+      <a href="javascript:void(0)" onclick="stop();">stop</a>
+      <a href="javascript:void(0)" onclick="restart();">restart</a>
+  </div>
+  
 
   <div id="div1">
 
@@ -56,20 +85,52 @@
   <script type="text/javascript">
     var d1 = document.getElementById("div1");
     var d2 = document.getElementById("div2");
-    var eleArray = [d2];
+    var eleArray = [d1, d2];
 
     var props = [[{propertyName:'width', propertyValue:500}, {propertyName:'background-color', propertyValue:'rgb(80, 10, 10)'}, {propertyName:'translateY', propertyValue:200}]];
 
+    //let props2 = [[{propertyName:'width', propertyValue:100}, {propertyName:'background-color', propertyValue:'rgb(100, 100, 100)'}, {propertyName:'translateX', propertyValue:200}]];
+
+    //let props3 = [[{propertyName:'translateX', propertyValue:-200}]];
+
     //var props = [[{propertyName:'width', propertyValue:300}, {propertyName:'height', propertyValue:500}], [{propertyName:'width', propertyValue:100}, {propertyName:'height', propertyValue:300}]];
 
-    //var props = [[{propertyName:'width', propertyValue:300}, {propertyName:'height', propertyValue:500}, {propertyName:'opacity', propertyValue:0.3}], [{propertyName:'width', propertyValue:100}, {propertyName:'height', propertyValue:300}]];
+    var props4 = [[{propertyName:'width', propertyValue:300}, {propertyName:'height', propertyValue:500}, {propertyName:'opacity', propertyValue:0.3}], [{propertyName:'width', propertyValue:100}, {propertyName:'height', propertyValue:300}]];
 
-    var duration = 2000;
+    var props5 = [[{propertyName:'width', propertyValue:500}, {propertyName:'height', propertyValue:100}, {propertyName:'opacity', propertyValue:1}], [{propertyName:'translateX', propertyValue:-400}, {propertyName:'background-color', propertyValue:'rgb(78,112,65)'}]];
+
+    var duration = 3000;
 
     var options = {easing:'Bounce.easeOut'};
 
     var ani = new Animation();
-    ani.add(eleArray, props, duration, options).start();
+    //ani.add(eleArray, props, duration, options).start();
+    ani.add(eleArray, props5, duration, options).add(eleArray, props4, duration, options);
+    //ani.start();
+
+    //ani.add(eleArray, props, duration, options);
+    
+    function start()
+    {
+      ani.start();
+    }
+
+    function pause()
+    {
+      ani.pause();
+    }
+
+    function stop()
+    {
+      ani.stop();
+    }
+    
+    function restart()
+    {
+      ani.restart();
+    }
+
+
 
 
   </script>

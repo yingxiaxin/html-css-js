@@ -267,7 +267,8 @@
         STATE_STOP = 2,
         DEFAULT_INTERVAL = 17,
         SETPROP_DEFAULT = 0,
-        SETPROP_END = 1;
+        SETPROP_END = 1,
+        SETPROP_BEGIN = 2;
 
     let Animation = function() 
     {
@@ -293,8 +294,10 @@
             starttime: null,    //开始时间
             currenttime: null,  //进行到的时间
             lasttime: 0,     //持续到的时间
-            requestAnimationFrameId: null,  
-            timeoutId: null
+            animationFrameFn: null,  
+            animationFrameId:null,
+            timeoutId: null,
+            propsCalculted: false
         }
         this.taskQueue.push(task);
         return this;
@@ -316,17 +319,57 @@
 
     Animation.prototype.stop = function() 
     {
+        if (this.state === STATE_INITIAL) 
+        {
+            return;
+        }
 
+        this.pause(); // 先暂停动画
+
+        let task = this.taskQueue[this.taskQueue.length - 1]; // 切换到最后一个命令
+
+        this._handleProps(task);
+
+        this._setProperty(task, SETPROP_END);
+
+        this._reset(); // 重置动画序列
     }
 
-    Animation.prototype.pause = function() 
+    Animation.prototype.pause = function()
     {
+        if (this.state !== STATE_START)
+        {
+            return;
+        }
+        this.state = STATE_STOP;
+        let task = this.taskQueue[this.index];
 
+        if (task.animationFrameId !== null) 
+        {
+            cancelAnimationFrame(task.animationFrameId);
+            task.animationFrameFn = null;
+            task.animationFrameId = null;
+        }
+        if (task.timeoutId !== null) 
+        {
+            clearTimeout(task.timeoutId);
+            task.timeoutId = null;
+        }
+        return this;
     }
 
     Animation.prototype.restart = function() 
     {
+        let task = this.taskQueue[this.index];
+        this.pause();
 
+        for (let i=0; i<this.taskQueue.length; i++)
+        {
+            this._setProperty(this.taskQueue[i], SETPROP_BEGIN);
+        }        
+
+        this._reset();
+        this.start();
     }
 
     Animation.prototype._runTask = function() 
@@ -339,7 +382,7 @@
             return;
         }
 
-        this._handleProps(task);
+        this._handleProps(task);    
 
         let me = this;
 
@@ -380,6 +423,7 @@
         propertyHandler['default'] = function(ele, item) 
         {
             let begin = getComputedStyle(ele, null).getPropertyValue(item['propertyName']);
+
             let end = item['propertyValue'];
 
             let propObj = {};
@@ -394,7 +438,7 @@
         {
             propertyHandler[prptName] = function(ele, item) 
             {
-                let begin = getComputedStyle(ele, null).getPropertyValue('transform');
+                let begin = getComputedStyle(ele, null).getPropertyValue('transform') === 'none' ? 'matrix(1,0,0,1,0,0)' : getComputedStyle(ele, null).getPropertyValue('transform');
                 let end = item['propertyValue'];
     
                 let propObj = {};
@@ -431,7 +475,11 @@
 
 
         return function(task)       //targets:[ele1, ele2], props:[[{propertyName:width, propertyValue:300}, {propertyName:height, propertyValue:200}], [{propertyName:backgroundColor, propertyValue:xxx}]]
-        {
+        {   
+            if (task.propsCalculted === true)
+            {
+                return;
+            }
             if (task.hasOwnProperty('targets'))
             {
                 task.newProps = [];
@@ -459,8 +507,9 @@
                     }
 
                     task.newProps.push(propArr);
-                }                
+                }
             }
+            task.propsCalculted = true;            
         }
 
     })();
@@ -472,14 +521,14 @@
         let self = this;
         let duration = task.duration;
 
-        task.requestAnimationFrameId = function()
+        task.animationFrameFn = function()
         {
             if (self.state !== STATE_START)
             {
                 return;
             }
             task.currenttime = (new Date()).getTime();  //当前时间
-            task.lasttime = task.currenttime - task.starttime;  //持续了多长时间            
+            task.lasttime = task.currenttime - task.starttime;  //持续了多长时间
 
             //如果持续时间超过了duration，直接将值置为设定值，然后执行下一个任务
             if (task.lasttime >= duration)
@@ -487,31 +536,38 @@
                 self._setProperty(task, SETPROP_END);
 
                 if (task.options.after) 
-                {                   
-                    task.options.after();                    
+                {
+                    task.options.after();
                 }
 
                 // 执行下一个任务
-                self._next();            
+                self._next();
             }
             else
             {
                 self._setProperty(task, SETPROP_DEFAULT);
-            }
-
-            if (task.requestAnimationFrameId)
-            {
-                requestAnimationFrame(task.requestAnimationFrameId);
-            }            
+                
+                task.animationFrameId = window.requestAnimationFrame(task.animationFrameFn);
+            }                      
         };
-        requestAnimationFrame(task.requestAnimationFrameId);
+
+        task.animationFrameFn();
     }
 
 
     Animation.prototype._setProperty = function(task, mode)
     {
         //options的形式为：let options = {easing:'Cubic.easeOut'};
-        let easing = task.options.easing ? Tween[task.options.easing.split('.')[0]][task.options.easing.split('.')[1]] : DEFAULT_EASING;    //设置缓动函数
+        let easing;
+        if(task.options.easing)
+        {
+            let easingFn = task.options.easing.split('.');
+            easing = easingFn.length === 1 ? Tween[easingFn[0]] : Tween[easingFn[0]][easingFn[1]];
+        }
+        else
+        {
+            easing = DEFAULT_EASING;
+        }
         switch(mode)
         {
             case SETPROP_DEFAULT: //正常模式，动画中
@@ -529,6 +585,7 @@
                                 {
                                     let begin = parseFloat(property.beginValue.replace('px', ''));
                                     let change = parseFloat(property.endValue) - begin;
+
                                     let current = easing(task.lasttime, begin, change, task.duration);
                                     task.targets[i].style[property.propName] = current + 'px';
                                 }
@@ -582,6 +639,29 @@
                                         mtxObj[property.propName] = currentTranslate;
                                         let currentValue = "matrix(" + mtxObj['scaleX'] + ', 0, 0, ' + mtxObj['scaleY'] + ', ' + mtxObj['translateX'] + ', ' + mtxObj['translateY'] + ')';
                                         task.targets[i].style.transform = currentValue;
+
+                                        console.log(currentValue);
+                                    }
+                                    if (property.propName.indexOf('matrix') >= 0)
+                                    {
+                                        let endObj = {};
+                                        let endArr = property.endValue.substring(7, property.endValue.length-1).split(',');
+                                        endObj['scaleX'] = parseFloat(endArr[0]);
+                                        endObj['scaleY'] = parseFloat(endArr[3]);
+                                        endObj['translateX'] = parseFloat(endArr[4]);
+                                        endObj['translateY'] = parseFloat(endArr[5]);
+                                        let changeX = endObj['translateX'] - mtxObj['translateX'];
+                                        let changeY = endObj['translateY'] - mtxObj['translateY'];
+                                        let changeScaleX = endObj['scaleX'] - mtxObj['scaleX'];
+                                        let changeScaleY = endObj['scaleY'] - mtxObj['scaleY'];
+
+                                        let currentX = easing(task.lasttime, parseFloat(mtxObj['translateX']), changeX, task.duration);
+                                        let currentY = easing(task.lasttime, parseFloat(mtxObj['translateY']), changeY, task.duration);
+                                        let currentScaleX = easing(task.lasttime, parseFloat(mtxObj['scaleX']), changeScaleX, task.duration);
+                                        let currentScaleY = easing(task.lasttime, parseFloat(mtxObj['scaleY']), changeScaleY, task.duration);
+
+                                        let currentValue = "matrix(" + currentScaleX + ', 0, 0, ' + currentScaleY + ', ' + currentX + ', ' + currentY + ')';
+                                        task.targets[i].style.transform = currentValue;                                        
                                     }
                                     else
                                     {
@@ -649,6 +729,22 @@
                                         let currentValue = "matrix(" + mtxObj['scaleX'] + ', 0, 0, ' + mtxObj['scaleY'] + ', ' + mtxObj['translateX'] + ', ' + mtxObj['translateY'] + ')';
                                         task.targets[i].style.transform = currentValue;
                                     }
+                                    if (property.propName.indexOf('matrix') >= 0)
+                                    {
+                                        let endObj = {};
+                                        let endArr = property.endValue.substring(7, property.endValue.length-1).split(',');
+                                        endObj['scaleX'] = parseFloat(endArr[0]);
+                                        endObj['scaleY'] = parseFloat(endArr[3]);
+                                        endObj['translateX'] = parseFloat(endArr[4]);
+                                        endObj['translateY'] = parseFloat(endArr[5]);
+                                        let changeX = endObj['translateX'] - mtxObj['translateX'];
+                                        let changeY = endObj['translateY'] - mtxObj['translateY'];
+                                        let changeScaleX = endObj['scaleX'] - mtxObj['scaleX'];
+                                        let changeScaleY = endObj['scaleY'] - mtxObj['scaleY'];
+
+                                        let currentValue = "matrix(" + endObj['scaleX'] + ', 0, 0, ' + endObj['scaleY'] + ', ' + endObj['translateX'] + ', ' + endObj['translateY'] + ')';
+                                        task.targets[i].style.transform = currentValue;                                        
+                                    }
                                     else
                                     {
                                         let end = Math.round(parseFloat(property.endValue));
@@ -660,6 +756,18 @@
                                 break;
                             }
                         }
+                    }
+                }
+                break;
+            }
+            case SETPROP_BEGIN:
+            {
+                for (let i=0; i<task.targets.length; i++)
+                {
+                    for (let j=0; j<task.newProps[i].length; j++)
+                    {
+                        let property = task.newProps[i][j];
+                        task.targets[i].style[property.propName] = property.beginValue;
                     }
                 }
                 break;
