@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>div互换测试页面</title>
     <script src="js/Animation.js"></script>
+    <script src="js/divSwitcher.js"></script>
 
     <style>
       html
@@ -63,15 +64,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
       }
-      .swapLG
-      {
-        width: 100%;
-        height: 100%;
-        box-sizing: border-box;
-        border: 1px solid grey;
-        z-index: 99;
-      }
-      .swapSM
+      .switch
       {
         width: 100%;
         height: 100%;
@@ -84,18 +77,13 @@
   </head>
 <body>
 
-  <div class="btn">
-      <a href="javascript:void(0)" onclick="swap();">交换</a>
-  </div>
-  
-
-  <div id="div1">
-    <div class="swapLG">
+  <div id="div1" class="switchMajor">
+    <div class="switch">
       我是大的DIV
     </div>
   </div>
-  <div id="div2">
-    <div class="swapSM">
+  <div id="div2" class="switchMinor">
+    <div class="switch">
       我是小的DIV
     </div>
   </div>
@@ -103,103 +91,6 @@
   <script type="text/javascript">
 
     
-    function swap()
-    {
-
-      let divlg = document.getElementsByClassName('swapLG')[0];
-      let divsm = document.getElementsByClassName("swapSM")[0];     
-      
-
-
-      let lgWidth = getComputedStyle(divlg, null).getPropertyValue('width');
-      let lgHeight = getComputedStyle(divlg, null).getPropertyValue('height');
-
-      let smWidth = getComputedStyle(divsm, null).getPropertyValue('width');
-      let smHeight = getComputedStyle(divsm, null).getPropertyValue('height');
-
-      let lgtop = divlg.getBoundingClientRect().top;
-      let lgleft = divlg.getBoundingClientRect().left;
-
-      let smtop = divsm.getBoundingClientRect().top;
-      let smleft = divsm.getBoundingClientRect().left;
-
-      let sm2lgWidth = lgWidth - smWidth;
-      let sm2lgHeight = lgHeight - smHeight;
-      let sm2lgTranslateX = lgleft - smleft;
-      let sm2lgTranslateY = lgtop - smtop;
-
-      let lg2smWidth = smWidth - lgWidth ;
-      let lg2smHeight = smHeight - lgHeight;
-      let lg2smTranslateX = smleft- lgleft;
-      let lg2smTranslateY = smtop - lgtop;
-
-      smWidth = parseInt(smWidth.replace('px', ''));
-      smHeight = parseInt(smHeight.replace('px', ''));
-      lgWidth = parseInt(lgWidth.replace('px', ''));
-      lgHeight = parseInt(lgHeight.replace('px', ''));
-
-      let lgtranslateValue = 'matrix(1,0,0,1,' + lg2smTranslateX + ',' + lg2smTranslateY + ')';
-      let smtranslateValue = 'matrix(1,0,0,1,' + sm2lgTranslateX + ',' + sm2lgTranslateY + ')';
-
-      let ani = new Animation();
-      let targets = [divlg, divsm];
-      let props5 = [[{propertyName:'width', propertyValue:smWidth}, {propertyName:'height', propertyValue:smHeight}, {propertyName:'matrix', propertyValue:lgtranslateValue}], 
-      [{propertyName:'width', propertyValue:lgWidth}, {propertyName:'height', propertyValue:lgHeight}, {propertyName:'matrix', propertyValue:smtranslateValue}]];
-
-      
-      //let props5 = [[{propertyName:'matrix', propertyValue:'matrix(1,0,0,1,400,400)'}]];
-
-
-      let gaplg = document.createElement('div');
-      gaplg.style.height = '0px';
-      let gapsm = document.createElement('div');
-      gapsm.style.height = '0px';
-
-      let lgParent = divlg.parentNode;
-      let smParent = divsm.parentNode;
-
-      lgParent.insertBefore(gaplg, divlg);
-      smParent.insertBefore(gapsm, divsm);
-
-
-      let options = {easing:'Cubic.easeOut',
-                    after:function()
-                    {
-                      doit();
-                    },
-                    before:function()
-                    {
-                      float();
-                    }
-                  };
-      ani.add(targets, props5, 2000, options).start();
-
-
-      function doit()
-      {
-        lgParent.insertBefore(divsm, gaplg);
-        smParent.insertBefore(divlg, gapsm);
-
-        lgParent.removeChild(gaplg);
-        smParent.removeChild(gapsm);
-
-        divsm.style.transform = 'none';
-        divlg.style.transform = 'none';
-      };
-
-
-      function float()
-      {
-        divsm.style.position = 'fixed';
-        divlg.style.position = 'fixed';
-
-        divsm.style.zIndex = '99';
-        divlg.style.zIndex = '99';
-
-        divsm.style.float = 'left';
-        divlg.style.float = 'left';
-      }
-    }
 
 
   </script>
